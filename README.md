@@ -1,81 +1,80 @@
-# Vue スプリント
-### This was created during my time as a [Code Chrysalis](https://codechrysalis.io) Student
+# Vue Sprint
 
-## 目次
+## Table of Contents
 
-1.  [導入](#導入)
-1.  [目的](#目的)
-1.  [環境](#環境)
-1.  [要件](#要件)
-1.  [依存パッケージのインストール](#依存パッケージのインストール)
-1.  [要件と説明](#要件と説明)
-1.  [基本演習](#基本演習)
-1.  [上級演習](#上級演習)
-1.  [参考資料](#参考資料)
-1.  [コントリビューション](#コントリビューション)
+1.  [Introduction](#introduction)
+1.  [Objectives](#objectives)
+1.  [Environment](#environment)
+1.  [Requirements](#requirements)
+1.  [Installing Dependencies](#installing-dependencies)
+1.  [Requirements & Instructions](#objectives-and-instructions)
+1.  [Basic Requirements](#basic-requirements)
+1.  [Advanced Requirements](#advanced)
+1.  [Resources](#resources)
+1.  [Contributing](#contributing)
 
-## 導入
+## Introduction
 
-いまなお人気の高い React や Angular に代わるフロントエンドのフレームワークとして、急速に知名度を獲得しつつある Vue にチャレンジしてみましょう。このフレームワークは、双方向データバインディングや、他のアプリケーションへの導入が容易な点などでよく知られています。
+Dive into Vue, a front end framework quickly gaining recognition as a popular alternative to React and Angular. This framework is known for two-way data binding and ability to easily insert and scale into other applications.
 
-## 目的
+## Objectives
 
-この課題の目的は、以下の通りです。
+In this task students will:
 
-- ドキュメントを用いながら、新たなフレームワークについて学習する
-- フロントエンドフレームワーク同士の共通点や相違点についてはっきりと説明できるようになる
-- Vue の単一ファイルコンポーネントを利用して写真をアップロードするアプリを開発する
-- Vue のアーキテクチャの基礎をおさえて、コンポーネントを作成し、ライフサイクルメソッドを作り、データを渡す
+- Learn a new framework using documentation
+- Be able to clearly state similarities and differences between front-end frameworks
+- Use Vue's single-file architecture to develop a photo upload app
+- Use the basics of Vue architecture: create components, use lifecycle methods, and pass data
 
-## 環境
+## Environment
 
-### 要件
+### Requirements
 
 - Node.js
 
-### 依存パッケージのインストール
+### Installing Dependencies and Starting Up
 
-この課題の依存パッケージをインストールするためには、
+To install the dependencies for this project:
 
 ```shell
   $ yarn
 ```
 
-ESLint を実行するには、
+To run eslint:
 
 ```shell
   $ yarn lint
 ```
 
-単体テストを実行するには、
+To run unit tests:
 
 ```shell
   $ yarn test:unit
 ```
 
-ホットリロードを利用して開発環境でアプリを実行するには、
+To run the app in development with hot reloading:
 
 ```shell
   $ yarn dev
 ```
 
-本番用のビルドファイルを作り、簡易サーバーを立ち上げるには、
+To create a production-ready build and serve through a simple server:
 
 ```shell
   $ yarn start
 ```
 
-## 要件と説明
+## Requirements and Instructions
 
-### 基本演習
+### Basic Requirements
 
-この演習では、React で作り上げた写真をアップロードするアプリを、Vue で作り直してもらいます。結果としてみなさんは、React のときと同じ 5 つのコンポーネント、App、Navbar、Upload、AllPhotos、そして SinglePhoto を複製することになります。
+For this activity, you should be replicating the photo upload app you build in React, but in Vue. You will end up with the same five components: App, Navbar, Upload, AllPhotos, and SinglePhoto.
 
-フレームワークについていろいろと調べる際は、[Vue のドキュメント](https://vuejs.org/v2/guide/) を利用してください。新たなテクノロジーやフレームワークの学習は、今後 _避けては通れない_ ので、今回の演習問題はドキュメントを読む力の向上も意図して作られています。
+Use the [Vue docs](https://vuejs.org/v2/guide/) to explore this framework. You _will_ have to learn new technologies and frameworks often, so this activity is designed to push you to get better at reading documentation.
 
-この Vue のアプリでは、[単一ファイルコンポーネント](https://vuejs.org/v2/guide/single-file-components.html)を利用することにも注意してください。リンク先の説明をしっかり読み、React との書き方の違いを理解するようにしてください。アプリの骨組みのほとんどは、もうみなさんのために用意してあります。
+Note that we will be using [single file components](https://vuejs.org/v2/guide/single-file-components.html) for this Vue app. Read this page closely so you understand the difference in syntax. Most of the structure of this app has been set up for you.
 
-各コンポーネントからなるヒエラルキーは、大体次のような形をとるはずです。
+Your component hierarchy will end up resembling the following:
 
 ```
   App
@@ -86,54 +85,54 @@ ESLint を実行するには、
 
 #### App
 
-このコンポーネントは、今回の Vue アプリでもっとも大事なエントリーポイントになります。
+This component is the main entry point for your Vue app.
 
-ここでは次の 3 つのデータを格納します。
+It should store three pieces of data:
 
-- [ ] `currentView` は文字列で、ユーザーが AllPhotos と SinglePhoto のどちらの view 層を見ているのかをコンポーネントに伝える役割を果たします。
-- [ ] `photos` は、画像を Base64 文字列で表した各要素からなる配列です。
-- [ ] `selectedPhoto` は、Base64 文字列で表した 1 枚の画像のことです。
+- [ ] `currentView`, a string that tells the component whether the user should be shown the AllPhotos or SinglePhoto view.
+- [ ] `photos`, an array of images represented as base-64 strings.
+- [ ] `selectedPhoto`, an image represented as a base-64 string.
 
-このコンポーネントは、その他全てのコンポーネントをレンダリングするためにも必要になります。
+It is also responsible for rendering all of the other components:
 
-- [ ] **Navbar** は、ユーザーのためにナビゲーションバーをレンダリングします。Navbar は、view 層にかかわらず、つねに表示されます。
-- [ ] **AllPhotos** または **SinglePhoto** は、網目上に配置された全画像、あるいは大きく引き伸ばされた単一の写真を表示するコンポーネントになります。このレンダリングは、**App** コンポーネントの `currentView` プロパティに基づいて、条件分岐的に行われます。みなさんのアプリのテンプレート内でどのようにレンダリングの条件分岐を行うかは、[Vue のドキュメント](https://vuejs.org/v2/guide/conditional.html)を参照してください。
+- [ ] **Navbar**, which renders the navigation bar for the user. The Navbar is always shown regardless of view.
+- [ ] Either **AllPhotos** or **SinglePhoto**, which renders either a grid of all photos or an enlarged version of just one single photo. This render is conditional, based on the `currentView` property of the **App** component's state. Explore the [Vue docs](https://vuejs.org/v2/guide/conditional.html) for ideas for how to render conditional displays in your template.
 
-デフォルトでは、**App** は **AllPhotos** コンポーネントを表示するようにしてください。
+**App** should default to showing the **AllPhotos** component.
 
-**App** コンポーネントがマウントされたら、つづいて次のようなことが起こります。
+When **App** component mounts, the following should happen:
 
-- [ ] `created` メソッドを実行することで、Vue のライフサイクルを中断させてください。 [Vue のライフサイクルについてはこちらを読んでください](https://alligator.io/vuejs/component-lifecycle/)。このメソッドの内部では、**utils/index.js** ファイルに書かれているユーティリティ・メソッドを利用して Amazon の S3 サービスにアクセスし、あらかじめ用意された S3 バケット上の画像データをすべて取り出してきてください。
-- [ ] それが終わったら、それぞれの画像をコンポーネントのデータオブジェクト内にある `photos` という配列に格納してください。
+- [ ] It should pause the Vue lifecycle by calling the `created` method. [Read more about the Vue lifecycle here](https://alligator.io/vuejs/component-lifecycle/). Inside of that method, it should use the utility methods found in the **utils/index.js** file to make a call to Amazon's S3 service to retrieve a list of all items stored on the pre-specified S3 bucket.
+- [ ] Then, it should grab each image from that list of items and store it into the `photos` array in the component's data.
 
 #### Navbar
 
-このコンポーネントは、いま作っている Vue のアプリのナビゲーションバーとして機能させてください。Upload コンポーネントとともに、タイトルをレンダリングすることになります。
+This component should serve as your navigation bar for your Vue app. It should render a title along with the Upload component.
 
-- [ ] タイトルは、クリック可能なエレメントであり、クリックすると **App** コンポーネントの data の中にある文字列 `currentView` の値を `AllPhotos` に変更します。これで、ユーザーは再び AllPhotos の view 層を見ることができるようになります。この動きを作るために、Vue のドキュメントの[イベント](https://vuejs.org/v2/guide/components.html#Sending-Messages-to-Parents-with-Events)について確認しておきましょう。
-- [ ] NavBar は、Upload コンポーネントもレンダリングしなければいけません。このコンポーネントは、送られてきたファイルを引数として受け取り、**utils/index.js** の中にあるユーティリティ・メソッドの一つを使うことで、そのファイルを S3 に保存する役目を果たします。その結果として、**App** コンポーネントの state に保存された配列 photos も更新されることになります。
+- [ ] The title should be a clickable element that, when clicked, will modify the value of the `currentView` string in the **App** component's data, changing it to `'AllPhotos'`. This is to provide the user with a method of navigating back to seeing the AllPhotos view. You should check out the Vue documentation on [Events](https://vuejs.org/v2/guide/components.html#Sending-Messages-to-Parents-with-Events) for how to handle this interaction.
+- [ ] The navbar should also render the Upload component. This component should expect a file to be sent as an argument and is responsible for saving that file to S3 using one of the utility methods found in **utils/index.js** to do so. As a result of this, it should also update the photos array saved in the state of the **App** component.
 
 #### Upload
 
-- [ ] Upload コンポーネントは、1 枚の画像をアップロードするのに必要な、`button` エレメントをレンダリングします。
-- [ ] `input` エレメントは、ユーザーが画像ファイルを 1 つ選択するために使われます。
-- [ ] `input` エレメントで画像ファイルが選択されると、最終的にそのファイルは S3 バケットに保存されることになります。
-- [ ] コンポーネント内にある `button` エレメントを用いることで、見えない `input` エレメントのクリックイベントを発火させてください。この機能を作るために、Vue のドキュメントの [イベント・ハンドリング](https://vuejs.org/v2/guide/events.html)を参照してください。
+- [ ] The Upload component renders a `button` element for the purposes of uploading an image.
+- [ ] The `input` element should allow users to select a an image file.
+- [ ] When an image file has been selected with the `input` element, it should ultimately save that file in a S3 bucket.
+- [ ] You should use the `button` element in the component to trigger a click event on the invisible `input` element. Check out the Vue documentation on [Event Handling](https://vuejs.org/v2/guide/events.html) for a look at how to accomplish this.
 
 #### AllPhotos
 
-- [ ] このコンポーネントは、Base64 文字列からなる配列を prop として持ち、それに基づいて画像を網目上にレンダリングします。
-- [ ] 画像は、フルスクリーンで表示してはいけません！　ほどよい大きさにして、網目上に表示されていることがわかるようにしてください。
-- [ ] 文字列から成るこの配列は、親の **App** コンポーネントから data として受け渡されるようにしてください。
-- [ ] それぞれの画像はクリック可能であり、クリックした際は、クリックした画像を **App** コンポーネントに送り返す関数を実行してください。
-- [ ] 個別の画像がクリックされると、**App** コンポーネントのレンダリングが **AllPhotos** コンポーネントではなく、 **SinglePhoto** コンポーネントを表示するように設定してください。
+- [ ] It should render a grid of images based on an array of base64-encoded strings given to it as a prop.
+- [ ] The images should not take up the entire screen! Make sure their dimensions allow for a decently-sized grid of images.
+- [ ] This array of strings should be passed down as data by the parent **App** component.
+- [ ] Each image should be clickable, executing a function that will send the clicked image's index back up to the **App** component.
+- [ ] When an individual photo is clicked, it should switch the rendering of the **App** component so that it shows the **SinglePhoto** component instead of the **AllPhotos** component.
 
 #### SinglePhoto
 
-- [ ] このコンポーネントは、1 舞の画像をフルスクリーンで表示するためのものです！
-- [ ] レンダリングされた画像は、**App** コンポーネントから prop として渡されるようにしてください。
+- [ ] It should render a single image that takes up the entire screen!
+- [ ] The image it renders should be passed into it as a prop from the **App** component.
 
-#### ワイヤフレーム
+#### Wireframes
 
 - All Photos:
 
@@ -143,16 +142,16 @@ ESLint を実行するには、
 
 ![Single Photo](./img/single_view.png)
 
-### 上級演習
+### Advanced Requirements
 
-- [ ] 写真がアップロードされている際に表示する、プログレスバーかオーバーレイを加え、アップロードが完了した際には消えるようにしてください。
-- [ ] ステート管理をするために Vuex を加えてください。これは Vue 専用の Redux のようなものです。[詳細はこちら！](https://vuex.vuejs.org/guide/)
-- [ ] Vue のテスト・ユーティリティを用いて、ユニット・テストを加えましょう。[詳細はこちら！](https://vuejs.org/v2/guide/unit-testing.html)
+- [ ] Add a progress bar or visual overlay while a photo is being uploaded, and make it disappear once the upload is complete.
+- [ ] Add Vuex to manage your state. This is similar to Redux, but for Vue. [Read more here!](https://vuex.vuejs.org/guide/)
+- [ ] Add unit tests using Vue's test utilities. [Read more here!](https://vuejs.org/v2/guide/unit-testing.html)
 
-## 参考資料
+## Resources
 
-- [Vue のドキュメント](https://vuejs.org/)
+- [Vue Docs](https://vuejs.org/)
 
-## コントリビューション
+## Contributing
 
-なにか問題がありましたか？　まだ改善の余地がありそうですか？　[カリキュラムにコントリビュートしてみましょう](mailto:hello@codechrysalis.io)！
+See a problem? Can something be done better? [Contribute to our curriculum](mailto:hello@codechrysalis.io)!
